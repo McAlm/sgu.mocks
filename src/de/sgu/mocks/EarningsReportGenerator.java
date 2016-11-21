@@ -1,5 +1,8 @@
 package de.sgu.mocks;
 
+import de.sgu.mocks.connection.ConnectionException;
+import de.sgu.mocks.connection.ConnectionProvider;
+
 import java.sql.Connection;
 
 public class EarningsReportGenerator {
@@ -14,10 +17,14 @@ public class EarningsReportGenerator {
         this.reportProvider = reportProvider;
     }
 
-    public Report generateReport(String mall) {
-        Connection connection = this.connectionProvider.getConnection(mall);
-        Earnings earnings = this.earningsReportDataCollector.getEarnings(connection);
-        return this.reportProvider.createReport(earnings);
+    public Report generateReport(String mall) throws GenerateReportException{
+        try {
+            Connection connection = this.connectionProvider.getConnection(mall);
+            Earnings earnings = this.earningsReportDataCollector.getEarnings(connection);
+            return this.reportProvider.createReport(earnings);
+        } catch (ConnectionException e) {
+            throw new GenerateReportException(e);
+        }
     }
 
 }
