@@ -3,6 +3,7 @@ package de.sgu.mocks;
 import de.sgu.mocks.connection.ConnectionException;
 import de.sgu.mocks.connection.ConnectionProvider;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 public class EarningsReportGenerator {
@@ -22,7 +23,7 @@ public class EarningsReportGenerator {
             Connection connection = this.connectionProvider.getConnection(mall);
             Earnings earnings = this.earningsReportDataCollector.getEarnings(connection);
             return this.reportProvider.createReport(earnings);
-        } catch (ConnectionException e) {
+        } catch (ConnectionException | IOException e) {
             throw new GenerateReportException(e);
         }
     }

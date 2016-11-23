@@ -2,6 +2,7 @@ package de.sgu.mocks.connection;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.Properties;
 
@@ -16,7 +17,7 @@ public class ConnectionProviderTest {
     
     
     @Test
-    public void testGetConnectionReturnsConnection() throws ConnectionException {
+    public void testGetConnectionReturnsConnection() throws ConnectionException, IOException {
         
         connectionPropertiesProvider = EasyMock.createMock(ConnectionPropertiesProvider.class);
         Properties props = new Properties();

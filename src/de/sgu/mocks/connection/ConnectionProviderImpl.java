@@ -1,5 +1,6 @@
 package de.sgu.mocks.connection;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.Properties;
 
@@ -14,7 +15,7 @@ public class ConnectionProviderImpl implements ConnectionProvider {
     }
 
     @Override
-    public Connection getConnection(String mall) throws ConnectionException {
+    public Connection getConnection(String mall) throws ConnectionException, IOException {
         Properties connectionProps = this.connectionPropertiesProvider.getConnectionProps(mall);
         return this.databaseConnectionProvider.createConnection(connectionProps);
     }

@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import de.sgu.mocks.connection.ConnectionException;
 import de.sgu.mocks.connection.ConnectionProvider;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 import org.easymock.EasyMock;
@@ -45,13 +46,13 @@ public class EarningsReportGeneratorTest {
             EasyMock.verify(connectionProvider, earningsReportDataCollector, reportProvider);
 
             assertNotNull(report);
-        } catch (ConnectionException | GenerateReportException gre) {
+        } catch (ConnectionException | GenerateReportException | IOException gre) {
             fail("Unexpected exception!");
         }
     }
 
     @Test(expected=GenerateReportException.class)
-    public void testGetConnectionFailsAndThrowsReportGenerationFailedException() throws GenerateReportException, ConnectionException{
+    public void testGetConnectionFailsAndThrowsReportGenerationFailedException() throws GenerateReportException, ConnectionException, IOException{
         
         EasyMock.expect(this.connectionProvider.getConnection("aeon")).andThrow(new ConnectionException());
         EasyMock.replay(this.connectionProvider);
